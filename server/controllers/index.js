@@ -25,9 +25,8 @@ module.exports = {
       });
     },
     post: function (req, res) {
-      console.log(req.json);
       console.log('I am in Controllers/users/post');
-      models.users.post(function(data) {
+      models.users.post(req, res, function(data) { //hanyen: I added req, res arguments
         res.send(data);
       });
     }

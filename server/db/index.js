@@ -9,6 +9,7 @@ var con = mysql.createConnection({
   password: '',
   database: 'chat'
 });
+console.log('MySQL createConnection established');
 
 con.connect(function(err) {
   if (err) {
@@ -18,5 +19,11 @@ con.connect(function(err) {
   console.log('Connecntion established');
 });
 
-con.end(function(err) {});
+var handleQuery = function(query, readOrWrite, callback) {
+  console.log('inside handleQuery');
+  con.query(query, readOrWrite, callback);
+};
 
+// con.end(function(err) {});
+
+exports.handleQuery = handleQuery;
