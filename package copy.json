@@ -36,14 +36,5 @@
     "presets": [
       "es2015"
     ]
-  },
-  "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JaredSpencer/hrsf53-databases.git"
-  },
-  "bugs": {
-    "url": "https://github.com/JaredSpencer/hrsf53-databases/issues"
-  },
-  "homepage": "https://github.com/JaredSpencer/hrsf53-databases#readme"
+  }
 }
