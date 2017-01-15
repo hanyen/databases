@@ -40,7 +40,7 @@ var app = {
     console.log('i am in send function');//hanyen
     // POST the message to the server
     $.ajax({
-      url: app.server,
+      url: app.server + '/classes/users',
       type: 'POST',
       data: JSON.stringify(message),
       success: function (data) {
@@ -58,29 +58,28 @@ var app = {
   fetch: function(animate) {
     console.log('i am in fetch function');//hanyen
     $.ajax({
-      url: app.server,
+      url: app.server + '/classes/messages',
       type: 'GET',
       data: { order: '-createdAt' },
       contentType: 'application/json',
       success: function(data) {
-        console.log('Data from fetching from server: ', data.results);//hanyen: data.results is UNDEFINED
+        console.log('Data from server: ', data);//hanyen: data.results is UNDEFINED
         // Don't bother if we have nothing to work with
-        if (!data.results || !data.results.length) { return; }
+        if (!data || !data.length) { return; }
 
         // Store messages for caching later
-        app.messages = data.results;
+        app.messages = data;
 
         // Get the last message
-        var mostRecentMessage = data.results[data.results.length - 1];
+        var mostRecentMessage = data[data.length - 1];
 
         // Only bother updating the DOM if we have a new message
         if (mostRecentMessage.objectId !== app.lastMessageId) {
-          console.log('i am in if statement');
           // Update the UI with the fetched rooms
-          app.renderRoomList(data.results);
+          app.renderRoomList(data);
 
           // Update the UI with the fetched messages
-          app.renderMessages(data.results, animate);
+          app.renderMessages(data, animate);
 
           // Store the ID of the most recent message
           app.lastMessageId = mostRecentMessage.objectId;
@@ -93,17 +92,16 @@ var app = {
   },
 
   clearMessages: function() {
-    console.log('i am in clearMessages function');//hanyen
     app.$chats.html('');
   },
 
   renderMessages: function(messages, animate) {
-    console.log('i am in renderMessages function');//hanyen
     // Clear existing messages`
     app.clearMessages();
     app.stopSpinner();
     console.log('spinner is stopped');//hanyen
     if (Array.isArray(messages)) {
+      console.log('1');
       // Add all fetched messages that are in our current room
       messages
         .filter(function(message) {
@@ -120,7 +118,6 @@ var app = {
   },
 
   renderRoomList: function(messages) {
-    console.log('i am in renderRoomList function');//hanyen
     app.$roomSelect.html('<option value="__newRoom">New room...</option>');
 
     if (messages) {
@@ -142,7 +139,6 @@ var app = {
   },
 
   renderRoom: function(roomname) {
-    console.log('i am in renderRoom function');//hanyen
     // Prevent XSS by escaping with DOM methods
     var $option = $('<option/>').val(roomname).text(roomname);
 
@@ -151,7 +147,6 @@ var app = {
   },
 
   renderMessage: function(message) {
-    console.log('i am in renderMessage function');//hanyen
     if (!message.roomname) {
       message.roomname = 'lobby';
     }
@@ -178,7 +173,6 @@ var app = {
   },
 
   handleUsernameClick: function(event) {
-    console.log('i am in handleUsernameClick function');//hanyen
     // Get username from data attribute
     var username = $(event.target).data('username');
 
@@ -195,7 +189,6 @@ var app = {
   },
 
   handleRoomChange: function(event) {
-    console.log('i am in handleRoomChange function');//hanyen
     var selectIndex = app.$roomSelect.prop('selectedIndex');
     // New room is always the first option
     if (selectIndex === 0) {
@@ -220,7 +213,6 @@ var app = {
   },
 
   handleSubmit: function(event) {
-    console.log('i am in handleSubmit function');//hanyen
     var message = {
       username: app.username,
       text: app.$message.val(),
@@ -234,13 +226,11 @@ var app = {
   },
 
   startSpinner: function() {
-    console.log('i am in startSpinner function');//hanyen
     $('.spinner img').show();
     $('form input[type=submit]').attr('disabled', 'true');
   },
 
   stopSpinner: function() {
-    console.log('i am in stopSpinner function');//hanyen
     $('.spinner img').fadeOut('fast');
     $('form input[type=submit]').attr('disabled', null);
   }
