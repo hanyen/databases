@@ -65,7 +65,7 @@ describe('Persistent Node Chat Server', function() {
     });
   });
 
-  xit('Should output all messages from the DB', function(done) {
+  it('Should output all messages from the DB', function(done) {
     // Let's insert a message into the db
     var queryString = 'THIS IS THE COOLEST MESSAGE IN THE WORLD';
     var queryArgs = [];

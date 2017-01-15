@@ -14,6 +14,7 @@ module.exports = {
     post: function (req, res) {
       console.log('I am in Controllers/messages/post');
       var params = [req.body.message, req.body.username, req.body.roomname];
+      console.log(params);
       models.messages.post(params, function(err, results) {
         if (err) {
           throw err;
