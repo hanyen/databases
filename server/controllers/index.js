@@ -4,14 +4,21 @@ module.exports = {
   messages: {
     get: function (req, res) {
       console.log('I am in Controllers/messages/get');
-      models.messages.get(function(data) {
-        res.send(data);
+      models.messages.get(function(err, results) {
+        if (err) {
+          throw err;
+        }
+        res.json(results);
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
       console.log('I am in Controllers/messages/post');
-      models.messages.post(function(data) {
-        res.send(data);
+      var params = [req.body.message, req.body.username, req.body.roomname];
+      models.messages.post(params, function(err, results) {
+        if (err) {
+          throw err;
+        }
+        res.sendStatus(201);
       });
     } // a function which handles posting a message to the database
   },
@@ -20,14 +27,21 @@ module.exports = {
     // Ditto as above
     get: function (req, res) {
       console.log('I am in Controllers/users/get');
-      models.users.get(function(data) {
-        res.send(data);
+      models.users.get(function(err, results) {
+        if (err) {
+          throw err;
+        }
+        res.json(results);
       });
     },
     post: function (req, res) {
       console.log('I am in Controllers/users/post');
-      models.users.post(req, res, function(data) { //hanyen: I added req, res arguments
-        res.send(data);
+      var params = [req.body.username]; //TODO: make sure it matches the client side
+      models.users.post(params, function(err, results) { 
+        if (err) {
+          throw err;
+        }
+        res.sendStatus(201);
       });
     }
   }

@@ -4,14 +4,14 @@ var mysql = require('mysql');
 // You will need to connect with the user "root", no password,
 // and to the database "chat".
 
-var con = mysql.createConnection({
+var connection = mysql.createConnection({
   user: 'root',
   password: '',
   database: 'chat'
 });
 console.log('MySQL createConnection established');
 
-con.connect(function(err) {
+connection.connect(function(err) {
   if (err) {
     console.log('Error connecting to database');
     return;
@@ -19,11 +19,11 @@ con.connect(function(err) {
   console.log('Connecntion established');
 });
 
-var handleQuery = function(query, readOrWrite, callback) {
-  console.log('inside handleQuery');
-  con.query(query, readOrWrite, callback);
-};
+// var handleQuery = function(query, readOrWrite, callback) {
+//   console.log('inside handleQuery');
+//   con.query(query, readOrWrite, callback);
+// };
 
 // con.end(function(err) {});
 
-exports.handleQuery = handleQuery;
+exports.connection = connection;
